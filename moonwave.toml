@@ -1,4 +1,4 @@
 gitSourceBranch = "main"
 
 [docusaurus]
-baseUrl = "/"
+baseUrl = "/ClickPoint/"
