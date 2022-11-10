@@ -25,7 +25,7 @@ Settings.__newindex = function(tab, index, value)
 end
 
 -- Import sleitnick signal.
-local Signal = require(script.Signal)
+local Signal = require(script.Parent.Packages.signal)
 
 local ClickPoint: ClickPoint = {}
 ClickPoint.__index = ClickPoint
