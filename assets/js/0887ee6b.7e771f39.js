@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[707],{63891:s=>{s.exports=JSON.parse('{"sourceUrl":"https://github.com/fnuerpod/ClickPoint/blob/main","baseUrl":"/","classOrder":[],"apiCategories":[]}')}}]);
