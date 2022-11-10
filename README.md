@@ -28,7 +28,7 @@ ClickDetector.Settings["CursorIcon"] = "rbxassetid://569945340"
 ClickDetector.MouseClick:Connect(function(player: Player)
   print("I've been clicked!")
   
-  if player.UserId = 69518131 then
+  if player.UserId == 69518131 then
     ClickDetector.Settings["MaxActivationDistance"] += 1
   end
 end)
