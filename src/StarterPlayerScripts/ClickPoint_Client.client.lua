@@ -14,6 +14,11 @@ local Mouse = Player:GetMouse()
 local HOVERING_OVER_CLICKER = false
 local HOVER_OBJECT = nil
 
+-- Inefficient way of waiting for character to load before starting cycles.
+if Player.Character == nil then
+	Player.CharacterAdded:Wait()
+end
+
 -- Wait for render stepping.
 game:GetService("RunService").RenderStepped:Connect(function()
 	-- Perform a raycast.
