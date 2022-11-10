@@ -1,0 +1,15 @@
+# Project place file
+/*.rbxlx
+
+# Roblox Studio lock files
+/*.rbxlx.lock
+/*.rbxl.lock
+
+# Wally packages.
+Packages/
+
+# Moonwave build directory.
+build/
+
+# Any and all lock files.
+*.lock

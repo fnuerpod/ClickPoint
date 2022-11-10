@@ -1,0 +1,4 @@
+gitSourceBranch = "main"
+
+[docusaurus]
+baseUrl = "/"

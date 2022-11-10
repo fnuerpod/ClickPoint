@@ -1,0 +1,23 @@
+{
+  "name": "ClickPoint",
+  "tree": {
+    "$className": "DataModel",
+
+    "ReplicatedStorage": {
+      "$path" : "src/ReplicatedStorage",
+
+      "Packages": {
+        "$className": "Folder",
+        "$path": "Packages/"
+      }
+    },
+
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "Client": {
+          "$path": "src/StarterPlayerScripts"
+        }
+      }
+    }
+  }
+}
