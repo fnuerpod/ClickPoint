@@ -12,7 +12,8 @@ As this seems to be a common issue with the standard ROBLOX ClickDetectors, I am
 # Usage
 Place the latest RBXM file into Workspace and perform the following movements:
   - Move EVERYTHING in the **ReplicatedStorage** folder into **game.ReplicatedStorage**.
-	- Move EVERYTHING in the **StarterPlayerScripts** folder into **game.StarterPlayer.StarterPlayerScripts**.
+	
+  - Move EVERYTHING in the **StarterPlayerScripts** folder into **game.StarterPlayer.StarterPlayerScripts**.
   
 An example of how to use ClickPoint is below:
 ```lua
