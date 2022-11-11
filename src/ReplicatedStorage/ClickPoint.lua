@@ -119,6 +119,7 @@ function ClickPoint.new(instance: Instance, MaxActivation : number|nil, CursorIc
 	assert(typeof(instance) == "Instance", "expected Instance, got " .. typeof(instance))
 	assert(instance:IsA("BasePart"), "expected BasePart, got " .. instance.ClassName)
 	
+	
     -- Set maximum activation distance if not set already.
 	if MaxActivation == nil then
 		MaxActivation = 32
@@ -132,18 +133,26 @@ function ClickPoint.new(instance: Instance, MaxActivation : number|nil, CursorIc
 	-- Create table.
 	local Clicker: ClickPoint = setmetatable({}, ClickPoint)
 	
-	-- Set attribute for click detectable.
-	instance:SetAttribute("ClickDetectable", true)
-
-	-- Add to constant tag.
-	CollectionService:AddTag(instance, CLICKPOINT_TAG)
-	
 	-- Setup hooks.
-	local OnClicked = Instance.new("RemoteEvent", instance)
-	OnClicked.Name = "OnClicked"
+	local OnClicked
+	local OnHover
+	-- Check if a ClickPoint already exists for this instance.
+	if not CollectionService:HasTag(instance, CLICKPOINT_TAG) then
+		-- Create events.
+		OnClicked = Instance.new("RemoteEvent", instance)
+		OnClicked.Name = "OnClicked"
 
-	local OnHover = Instance.new("RemoteEvent", instance)
-	OnHover.Name = "OnHover"
+		OnHover = Instance.new("RemoteEvent", instance)
+		OnHover.Name = "OnHover"
+	else
+		-- We already have a ClickPoint for this instance. We can just "create" another but not set anything.
+		-- This will give us access to the ClickPoint without re-instantising.
+
+		OnClicked = instance.OnClicked
+		OnHover = instance.OnHover
+	end
+
+	
 	
 	-- ClickDetector compatibility MouseClick event.
 	Clicker.MouseClick = Signal.new()
@@ -169,9 +178,14 @@ function ClickPoint.new(instance: Instance, MaxActivation : number|nil, CursorIc
 	-- Set up settings
 	Clicker.Settings = setmetatable({Instance = instance}, Settings)
 	
-	Clicker.Settings["MaxActivationDistance"] = MaxActivation
-	
-	Clicker.Settings["CursorIcon"] = CursorIcon
+	-- Add settings only if we haven't been instantised before.
+	if not CollectionService:HasTag(instance, CLICKPOINT_TAG) then
+		Clicker.Settings["MaxActivationDistance"] = MaxActivation
+		Clicker.Settings["CursorIcon"] = CursorIcon
+
+		-- Make detectable by client.
+		Clicker.Settings["ClickDetectable"] = true
+	end
 	
 	Clicker.HoverRemote.OnServerEvent:Connect(function(player, state)
 		-- Perform checks.
@@ -224,6 +238,9 @@ function ClickPoint.new(instance: Instance, MaxActivation : number|nil, CursorIc
 			end
 		end
 	end)
+
+	-- Add to constant tag as this is now configured.
+	CollectionService:AddTag(instance, CLICKPOINT_TAG)
 	
 	return Clicker
 end

@@ -27,6 +27,45 @@ local Mouse = Player:GetMouse()
 local HOVERING_OVER_CLICKER = false
 local HOVER_OBJECT = nil
 
+-- Messy local function for generating a tooltip.
+local function _generateTooltip(name: string)
+	local ui = Instance.new("ScreenGui", game.Players.LocalPlayer.PlayerGui)
+	ui.Name = "Tooltip"
+	
+	local frame = Instance.new("Frame", ui)
+	frame.Size = UDim2.new(0,175,0,18)
+	
+	frame.BackgroundTransparency = 1
+	
+	local label = Instance.new("TextLabel", frame)
+	label.Size = UDim2.new(1,0,1,0)
+	label.Font = Enum.Font.Gotham
+	label.TextScaled = true
+	label.BackgroundTransparency = 1
+	label.TextXAlignment = Enum.TextXAlignment.Left
+	label.TextStrokeColor3 = Color3.fromRGB(0,0,0)
+	label.TextColor3 = Color3.fromRGB(255,255,255)
+	label.TextStrokeTransparency = 0
+	
+	label.Text = name
+	
+	local Connection
+
+	Connection = game:GetService("RunService").RenderStepped:Connect(function()
+		if ui.Parent == nil then
+			Connection:Disconnect()
+		end
+		
+		frame.Position = UDim2.new(0, Mouse.X + 32, 0, Mouse.Y-9)
+		
+	end)
+	
+	return ui	
+end
+
+-- Storage for tooltip.
+local TOOLTIP_STORAGE = nil
+
 -- 0 for hover end event sent, 1 for hover start event sent.
 local HOVER_EVENT_STATE = 0
 
@@ -99,8 +138,21 @@ game:GetService("RunService").RenderStepped:Connect(function()
 	if HOVERING_OVER_CLICKER then
 		--print("Icon set.")
 		Player:GetMouse().Icon = Raycast.Instance:GetAttribute("CursorIcon")
+
+		-- Check if instance has Tooltip text set.
+		-- If it does, we want to use it.
+		if HOVER_OBJECT:GetAttribute("Tooltip") and TOOLTIP_STORAGE == nil then
+			-- Display a tooltip.
+			TOOLTIP_STORAGE = _generateTooltip(HOVER_OBJECT:GetAttribute("Tooltip"))
+		end
 	else
 		Player:GetMouse().Icon = ""
+
+		-- If we are displaying a tooltip, destroy it.
+		if TOOLTIP_STORAGE ~= nil then
+			TOOLTIP_STORAGE:Destroy()
+			TOOLTIP_STORAGE = nil
+		end
 	end
 	
 end)
