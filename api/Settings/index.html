@@ -21,8 +21,8 @@ An example get/set in the Settings array would be:
 Settings[&quot;MaxActivationDistance&quot;] = 32
 print(Settings[&quot;CursorIcon&quot;])
 ```"><link data-rh="true" rel="canonical" href="https://fnuerpod.github.io/ClickPoint/api/Settings"><link data-rh="true" rel="alternate" href="https://fnuerpod.github.io/ClickPoint/api/Settings" hreflang="en"><link data-rh="true" rel="alternate" href="https://fnuerpod.github.io/ClickPoint/api/Settings" hreflang="x-default"><link rel="stylesheet" href="/ClickPoint/assets/css/styles.ce453ceb.css">
-<link rel="preload" href="/ClickPoint/assets/js/runtime~main.07689231.js" as="script">
-<link rel="preload" href="/ClickPoint/assets/js/main.e23f41cc.js" as="script">
+<link rel="preload" href="/ClickPoint/assets/js/runtime~main.4e487c31.js" as="script">
+<link rel="preload" href="/ClickPoint/assets/js/main.ced388f6.js" as="script">
 </head>
 <body class="navigation-with-keyboard">
 <script>!function(){function e(e){document.documentElement.setAttribute("data-theme",e)}var t=function(){var e=null;try{e=localStorage.getItem("theme")}catch(e){}return e}();null!==t?e(t):window.matchMedia("(prefers-color-scheme: dark)").matches?e("dark"):(window.matchMedia("(prefers-color-scheme: light)").matches,e("light"))}()</script><div id="__docusaurus">
@@ -33,28 +33,50 @@ print(Settings[&quot;CursorIcon&quot;])
 <pre class="language-lua"><code class="language-lua">Settings<span class="token punctuation">[</span><span class="token string">"MaxActivationDistance"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">32</span>
 <span class="token function">print</span><span class="token punctuation">(</span>Settings<span class="token punctuation">[</span><span class="token string">"CursorIcon"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 </code></pre>
-</div></header><h2 class="anchor anchorWithStickyNavbar_LWe7" id="properties">Properties<a class="hash-link" href="#properties" title="Direct link to heading">​</a></h2><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="MaxActivationDistance"><code style="text-decoration:none">MaxActivationDistance</code><a class="hash-link" href="#MaxActivationDistance" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/fnuerpod/ClickPoint/blob/main/src/ReplicatedStorage/ClickPoint.lua#L50"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>Settings<!-- -->.<!-- -->MaxActivationDistance<!-- -->:<!-- --> </code> <code class="blue_P4bS">number</code></div><div>
+</div></header><h2 class="anchor anchorWithStickyNavbar_LWe7" id="properties">Properties<a class="hash-link" href="#properties" title="Direct link to heading">​</a></h2><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="CursorIcon"><code style="text-decoration:none">CursorIcon</code><a class="hash-link" href="#CursorIcon" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/fnuerpod/ClickPoint/blob/main/src/ReplicatedStorage/ClickPoint.lua#L187"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>Settings<!-- -->.<!-- -->CursorIcon<!-- -->:<!-- --> </code> <code class="blue_P4bS">number</code></div><div>
 <p>Maximum distance a player can be away from a ClickPoint.</p>
-</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="CursorIcon"><code style="text-decoration:none">CursorIcon</code><a class="hash-link" href="#CursorIcon" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/fnuerpod/ClickPoint/blob/main/src/ReplicatedStorage/ClickPoint.lua#L54"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>Settings<!-- -->.<!-- -->CursorIcon<!-- -->:<!-- --> </code> <code class="blue_P4bS">string</code></div><div>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="CursorIcon"><code style="text-decoration:none">CursorIcon</code><a class="hash-link" href="#CursorIcon" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/fnuerpod/ClickPoint/blob/main/src/ReplicatedStorage/ClickPoint.lua#L195"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>Settings<!-- -->.<!-- -->CursorIcon<!-- -->:<!-- --> </code> <code class="blue_P4bS">string</code></div><div>
 <p>Link to a ROBLOX image asset which will be displayed when the ClickPoint is hovered over.</p>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="ClickDetectable"><code style="text-decoration:none">ClickDetectable</code><a class="hash-link" href="#ClickDetectable" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/fnuerpod/ClickPoint/blob/main/src/ReplicatedStorage/ClickPoint.lua#L202"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>Settings<!-- -->.<!-- -->ClickDetectable<!-- -->:<!-- --> </code> <code class="blue_P4bS">boolean</code></div><div>
+<p>Determines whether or not a ClickPoint is enabled.</p>
+</div><div class="divider_rE5g"></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="TooltipText"><code style="text-decoration:none">TooltipText</code><a class="hash-link" href="#TooltipText" title="Direct link to heading">​</a></h3><div class="repositoryDetailsContainer_BPdw"><a class="sourceButton_sEho" href="https://github.com/fnuerpod/ClickPoint/blob/main/src/ReplicatedStorage/ClickPoint.lua#L211"><div class="sourceButtonText_Vh0m">&lt;/&gt;</div></a></div><div class="memberString_GwaU"><code>Settings<!-- -->.<!-- -->TooltipText<!-- -->:<!-- --> </code> <code class="blue_P4bS">string</code><code class="op_lSLc"> | </code><code class="blue_P4bS">nil</code></div><div>
+<p>TooltipText displayed when a player hovers over the ClickPoint. Setting to nil removes the TooltipText.</p>
 </div></div></article></div><details><summary>Show raw api</summary><pre style="max-width:100%;white-space:pre-wrap">{
     &quot;functions&quot;: [],
     &quot;properties&quot;: [
         {
-            &quot;name&quot;: &quot;MaxActivationDistance&quot;,
-            &quot;desc&quot;: &quot;Maximum distance a player can be away from a ClickPoint.&quot;,
+            &quot;name&quot;: &quot;CursorIcon&quot;,
+            &quot;desc&quot;: &quot;Maximum distance a player can be away from a ClickPoint.\n\t\t&quot;,
             &quot;lua_type&quot;: &quot;number&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 50,
+                &quot;line&quot;: 187,
                 &quot;path&quot;: &quot;src/ReplicatedStorage/ClickPoint.lua&quot;
             }
         },
         {
             &quot;name&quot;: &quot;CursorIcon&quot;,
-            &quot;desc&quot;: &quot;Link to a ROBLOX image asset which will be displayed when the ClickPoint is hovered over.&quot;,
+            &quot;desc&quot;: &quot;Link to a ROBLOX image asset which will be displayed when the ClickPoint is hovered over.\t\t\n\t\t&quot;,
             &quot;lua_type&quot;: &quot;string&quot;,
             &quot;source&quot;: {
-                &quot;line&quot;: 54,
+                &quot;line&quot;: 195,
+                &quot;path&quot;: &quot;src/ReplicatedStorage/ClickPoint.lua&quot;
+            }
+        },
+        {
+            &quot;name&quot;: &quot;ClickDetectable&quot;,
+            &quot;desc&quot;: &quot;Determines whether or not a ClickPoint is enabled.\n\t\t&quot;,
+            &quot;lua_type&quot;: &quot;boolean&quot;,
+            &quot;source&quot;: {
+                &quot;line&quot;: 202,
+                &quot;path&quot;: &quot;src/ReplicatedStorage/ClickPoint.lua&quot;
+            }
+        },
+        {
+            &quot;name&quot;: &quot;TooltipText&quot;,
+            &quot;desc&quot;: &quot;TooltipText displayed when a player hovers over the ClickPoint. Setting to nil removes the TooltipText.\n\t\t\t&quot;,
+            &quot;lua_type&quot;: &quot;string|nil&quot;,
+            &quot;source&quot;: {
+                &quot;line&quot;: 211,
                 &quot;path&quot;: &quot;src/ReplicatedStorage/ClickPoint.lua&quot;
             }
         }
@@ -66,8 +88,8 @@ print(Settings[&quot;CursorIcon&quot;])
         &quot;line&quot;: 46,
         &quot;path&quot;: &quot;src/ReplicatedStorage/ClickPoint.lua&quot;
     }
-}</pre></details></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#types" class="table-of-contents__link toc-highlight">Types</a></li><li><a href="#properties" class="table-of-contents__link toc-highlight">Properties</a><ul><li><a href="#CursorIcon" class="table-of-contents__link toc-highlight">CursorIcon</a></li><li><a href="#MaxActivationDistance" class="table-of-contents__link toc-highlight">MaxActivationDistance</a></li></ul></li><li><a href="#functions" class="table-of-contents__link toc-highlight">Functions</a></li></ul></div></div></div></div></main></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2022 fnuerpod. Built with Moonwave and Docusaurus.</div></div></div></footer></div>
-<script src="/ClickPoint/assets/js/runtime~main.07689231.js"></script>
-<script src="/ClickPoint/assets/js/main.e23f41cc.js"></script>
+}</pre></details></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#types" class="table-of-contents__link toc-highlight">Types</a></li><li><a href="#properties" class="table-of-contents__link toc-highlight">Properties</a><ul><li><a href="#ClickDetectable" class="table-of-contents__link toc-highlight">ClickDetectable</a></li><li><a href="#CursorIcon" class="table-of-contents__link toc-highlight">CursorIcon</a></li><li><a href="#CursorIcon" class="table-of-contents__link toc-highlight">CursorIcon</a></li><li><a href="#TooltipText" class="table-of-contents__link toc-highlight">TooltipText</a></li></ul></li><li><a href="#functions" class="table-of-contents__link toc-highlight">Functions</a></li></ul></div></div></div></div></main></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2022 fnuerpod. Built with Moonwave and Docusaurus.</div></div></div></footer></div>
+<script src="/ClickPoint/assets/js/runtime~main.4e487c31.js"></script>
+<script src="/ClickPoint/assets/js/main.ced388f6.js"></script>
 </body>
 </html>
