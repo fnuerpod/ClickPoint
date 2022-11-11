@@ -30,7 +30,7 @@ local HOVER_OBJECT = nil
 -- Messy local function for generating a tooltip.
 local function _generateTooltip(instance: BasePart)
 
-	local ui = Instance.new("ScreenGui", game.Players.LocalPlayer.PlayerGui)
+	local ui = Instance.new("ScreenGui")
 	ui.Name = "Tooltip"
 	
 	local frame = Instance.new("Frame", ui)
@@ -64,12 +64,15 @@ local function _generateTooltip(instance: BasePart)
 			temp_connection:Disconnect()
 		end
 		
-		frame.Position = UDim2.new(0, Mouse.X + 32, 0, Mouse.Y-9)
+		frame.Position = UDim2.new(0, Mouse.X + 16, 0, Mouse.Y-9)
 		
 	end)
 
 	
-	
+	-- Set position at least once before making visible.
+	frame.Position = UDim2.new(0, Mouse.X + 16, 0, Mouse.Y-9)
+
+	ui.Parent = game.Players.LocalPlayer.PlayerGui
 	
 	return ui	
 end
