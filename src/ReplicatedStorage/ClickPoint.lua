@@ -71,6 +71,7 @@ ClickPoint.__index = ClickPoint
 	@param instance Instance -- The BasePart that should be clickable.
 	@param MaxActivation number|nil -- The maximum activation distance for the ClickPoint (default: 32).
 	@param CursorIcon string|nil -- The cursor that should be displayed when a player hovers over the ClickPoint (defaults to "rbxassetid://569945340").
+	@param TooltipText string|nil -- The tooltip text that should be displayed when a player hovers over the ClickPoint (defaults to nil).
 
 	@return ClickPoint -- Returns an initialised ClickPoint class.
 ]=]
@@ -204,11 +205,11 @@ function ClickPoint.new(instance: Instance, MaxActivation : number|nil, CursorIc
 		-- If tooltip text exists in arguments, set it in settings.
 		if TooltipText ~= nil then
 			--[=[
-				@prop TooltipText string|nil
+				@prop Tooltip string|nil
 				@within Settings
-				TooltipText displayed when a player hovers over the ClickPoint. Setting to nil removes the TooltipText.
+				Tooltip text displayed when a player hovers over the ClickPoint. Setting to nil removes the tooltip text.
 			]=]
-			Clicker.Settings["TooltipText"] = TooltipText
+			Clicker.Settings["Tooltip"] = TooltipText
 		end
 	end
 	
