@@ -44,14 +44,6 @@ local CollectionService = game:GetService("CollectionService")
 	```
 ]=]
 
---- @prop MaxActivationDistance number
---- @within Settings
---- Maximum distance a player can be away from a ClickPoint.
-
---- @prop CursorIcon string
---- @within Settings
---- Link to a ROBLOX image asset which will be displayed when the ClickPoint is hovered over.
-
 local Settings: {[string] : any} = {}
 Settings.__index = function(tab, key)
 	return tab.Instance:GetAttribute(key)
@@ -70,39 +62,6 @@ local Signal = require(script.Parent.Packages.signal)
 	The ClickPoint class is what sets up, configures and exposes user-managable endpoints for a ClickPoint.
 
 ]=]
-
---- @prop Settings Settings
---- @within ClickPoint
---- The settings for this ClickPoint Instance.
-
---- @prop MouseClick Signal
---- @within ClickPoint
---- This event is fired when a ClickPoint is clicked and security checks have passed.
-
---- @prop MouseButton1Down Signal
---- @within ClickPoint
---- This event is fired when a player presses down Button 1 (left click) on their mouse.
-
---- @prop MouseButton1Up Signal
---- @within ClickPoint
---- This event is fired when a player releases Button 1 (left click) on their mouse.
-
---- @prop MouseButton2Down Signal
---- @within ClickPoint
---- This event is fired when a player presses down Button 2 (right click) on their mouse.
-
---- @prop MouseButton2Up Signal
---- @within ClickPoint
---- This event is fired when a player releases Button 2 (right click) on their mouse.
-
---- @prop MouseEnter Signal
---- @within ClickPoint
---- This event is fired when a player's mouse enters the raycast/maximum activation range of a ClickPoint.
-
---- @prop MouseLeave Signal
---- @within ClickPoint
---- This event is fired when a player's mouse leaves the raycast/maximum activation range of a ClickPoint.
-
 local ClickPoint: ClickPoint = {}
 ClickPoint.__index = ClickPoint
 
@@ -154,19 +113,55 @@ function ClickPoint.new(instance: Instance, MaxActivation : number|nil, CursorIc
 
 	
 	
-	-- ClickDetector compatibility MouseClick event.
+	--[=[
+		@prop MouseClick Signal
+		@within ClickPoint
+		This event is fired when a ClickPoint is clicked and security checks have passed. This is a simple wrapper around MouseButton1Up designed to maintain compatibility with existing ClickDetector code.
+	]=]
 	Clicker.MouseClick = Signal.new()
 
-	-- MouseButton1/2 pressed down events.
+	--[=[
+		@prop MouseButton1Down Signal
+		@within ClickPoint
+		This event is fired when a player presses down Button 1 (left click) on their mouse.
+	]=]
 	Clicker.MouseButton1Down = Signal.new()
+
+	--[=[
+		@prop MouseButton2Down Signal
+		@within ClickPoint
+		This event is fired when a player presses down Button 2 (right click) on their mouse.
+	]=]
 	Clicker.MouseButton2Down = Signal.new()
 
-	-- MouseButton1/2 released events.
+	--[=[
+		@prop MouseButton1Up Signal
+		@within ClickPoint
+		This event is fired when a player releases Button 1 (left click) on their mouse.
+	]=]
 	Clicker.MouseButton1Up = Signal.new()
+
+	--[=[
+		@prop MouseButton2Up Signal
+		@within ClickPoint
+		This event is fired when a player releases Button 2 (right click) on their mouse.
+	]=]
+
 	Clicker.MouseButton2Up = Signal.new()
 
-	-- Mouse enter/leave events.
+	--[=[
+		@prop MouseEnter Signal
+		@within ClickPoint
+		This event is fired when a player's mouse enters the raycast/maximum activation range of a ClickPoint.
+	]=]
 	Clicker.MouseEnter = Signal.new()
+
+	--[=[
+		@prop MouseLeave Signal
+		@within ClickPoint
+		This event is fired when a player's mouse leaves the raycast/maximum activation range of a ClickPoint.
+	]=]
+
 	Clicker.MouseLeave = Signal.new()
 
 	-- RemoteEvents.
@@ -175,19 +170,44 @@ function ClickPoint.new(instance: Instance, MaxActivation : number|nil, CursorIc
 	
 	Clicker.Instance = instance
 	
-	-- Set up settings
+	--[=[
+		@prop Settings Settings
+		@within ClickPoint
+		The settings for this ClickPoint Instance.
+	]=]
 	Clicker.Settings = setmetatable({Instance = instance}, Settings)
 	
 	-- Add settings only if we haven't been instantised before.
 	if not CollectionService:HasTag(instance, CLICKPOINT_TAG) then
+		--[=[
+			@prop CursorIcon number
+			@within Settings
+			Maximum distance a player can be away from a ClickPoint.
+		]=]
 		Clicker.Settings["MaxActivationDistance"] = MaxActivation
+
+
+		--[=[
+			@prop CursorIcon string
+			@within Settings
+			Link to a ROBLOX image asset which will be displayed when the ClickPoint is hovered over.		
+		]=]
 		Clicker.Settings["CursorIcon"] = CursorIcon
 
-		-- Make detectable by client.
+		--[=[
+			@prop ClickDetectable boolean
+			@within Settings
+			Determines whether or not a ClickPoint is enabled.
+		]=]
 		Clicker.Settings["ClickDetectable"] = true
 
 		-- If tooltip text exists in arguments, set it in settings.
 		if TooltipText ~= nil then
+			--[=[
+				@prop TooltipText string|nil
+				@within Settings
+				TooltipText displayed when a player hovers over the ClickPoint. Setting to nil removes the TooltipText.
+			]=]
 			Clicker.Settings["TooltipText"] = TooltipText
 		end
 	end

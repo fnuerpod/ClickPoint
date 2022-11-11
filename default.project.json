@@ -18,7 +18,7 @@
       }
     },
 
-    "ReplicatedFirst": {
+    "ServerStorage": {
       "PackageRoot": {
         "$className": "Folder",
         "$path": "src/PackageRoot"

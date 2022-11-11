@@ -23,7 +23,7 @@ for _, path in next, BuildFolders do
 	end
 end
 
-for _, data in next, game.ReplicatedFirst.PackageRoot:GetChildren() do
+for _, data in next, game.ServerStorage.PackageRoot:GetChildren() do
 	data:Clone().Parent = ClickFolder
 end
 
