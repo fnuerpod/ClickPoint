@@ -17,7 +17,7 @@ Place the latest RBXM file into Workspace and perform the following movements:
 An example of how to use ClickPoint is below:
 ```lua
 -- Import ClickPoint.
-local ClickPoint: CLickPoint.ClickPoint = require(game.ReplicatedStorage.ClickPoint)
+local ClickPoint: ClickPoint.ClickPoint = require(game.ReplicatedStorage.ClickPoint)
 
 -- Create a new click detector for the BasePart we are a child of.
 -- We should only be activatable from 10 studs away all-around and our cursor icon on hover should be Shrek.
