@@ -16,6 +16,13 @@
       "StarterPlayerScripts": {
         "$path": "src/StarterPlayerScripts"
       }
+    },
+
+    "ReplicatedFirst": {
+      "PackageRoot": {
+        "$className": "Folder",
+        "$path": "src/PackageRoot"
+      }
     }
   }
 }
