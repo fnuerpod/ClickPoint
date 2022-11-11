@@ -10,4 +10,4 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 ]]
 
-return "License for Sleitnick's Signal module."
+return "License for Sleitnick's Signal module"
