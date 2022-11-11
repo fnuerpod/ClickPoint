@@ -17,23 +17,34 @@ Place the latest RBXM file into Workspace and perform the following movements:
 An example of how to use ClickPoint is below:
 ```lua
 -- Import ClickPoint.
-local ClickPoint = require(game.ReplicatedStorage.ClickPoint)
+local ClickPoint: CLickPoint.ClickPoint = require(game.ReplicatedStorage.ClickPoint)
 
 -- Create a new click detector for the BasePart we are a child of.
 -- We should only be activatable from 10 studs away all-around and our cursor icon on hover should be Shrek.
-local ClickDetector = ClickPoint.new(script.Parent, 10, "rbxassetid://1946950078")
+-- Our tooltip should be "Hello, ClickPoint!"
+local ClickDetector: ClickPoint.ClickPoint = ClickPoint.new(script.Parent, 10, "rbxassetid://1946950078", "Hello, ClickPoint!")
 
 -- Change ClickPoint icon to show a pointer on hover.
 ClickDetector.Settings["CursorIcon"] = "rbxassetid://569945340"
 
+-- Change ClickPoint tooltip to say "Sample Tooltip".
+ClickDetector.Settings["Tooltip"] = "Sample Tooltip"
+
 -- Every click, print "I've been clicked!" to the screen.
 -- Also, if the player's UserId is 69518131, one should be added to the MaxActivationDistance.
 ClickDetector.MouseClick:Connect(function(player: Player)
-  print("I've been clicked!")
-  
-  if player.UserId == 69518131 then
-    ClickDetector.Settings["MaxActivationDistance"] += 1
-  end
+	print("I've been clicked!")
+
+	if player.UserId == 69518131 then
+		ClickDetector.Settings["MaxActivationDistance"] += 1
+	end
+end)
+
+-- When a player releases a right-click over us, print "Menu!!" to the console.
+-- Also, change the tooltip to a random number between 1000 and 9999.
+ClickDetector.MouseButton2Up:Connect(function()
+	print("Menu!!")
+	ClickDetector.Settings["Tooltip"] = tostring(math.random(1000,9999))
 end)
 
 -- Log that the script has loaded.
