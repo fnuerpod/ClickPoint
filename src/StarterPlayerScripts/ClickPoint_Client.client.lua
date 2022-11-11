@@ -27,6 +27,9 @@ local Mouse = Player:GetMouse()
 local HOVERING_OVER_CLICKER = false
 local HOVER_OBJECT = nil
 
+-- 0 for hover end event sent, 1 for hover start event sent.
+local HOVER_EVENT_STATE = 0
+
 -- Inefficient way of waiting for character to load before starting cycles.
 if Player.Character == nil then
 	Player.CharacterAdded:Wait()
@@ -45,20 +48,49 @@ game:GetService("RunService").RenderStepped:Connect(function()
 			local Check = math.ceil((Raycast.Instance.Position - Player.Character.HumanoidRootPart.Position).Magnitude)
 
 			if Check > Raycast.Instance:GetAttribute("MaxActivationDistance") then
+				if HOVER_OBJECT ~= nil then
+					if HOVER_OBJECT:GetAttribute("ClickDetectable") and HOVER_OBJECT:FindFirstChild("OnHover") and HOVER_EVENT_STATE ~= 0 then
+						HOVER_OBJECT.OnHover:FireServer(false)
+						HOVER_EVENT_STATE = 0
+					end
+				end
+
 				HOVERING_OVER_CLICKER = false
 				HOVER_OBJECT = nil
 			else
 				HOVERING_OVER_CLICKER = true
 				HOVER_OBJECT = Raycast.Instance
+
+				if HOVER_OBJECT:GetAttribute("ClickDetectable") and HOVER_OBJECT:FindFirstChild("OnHover") and HOVER_EVENT_STATE ~= 1 then
+					HOVER_OBJECT.OnHover:FireServer(true)
+					HOVER_EVENT_STATE = 1
+				end
 			end
 			
 		else
 			-- Not a clickpoint.
+			
+			-- Do not perform hover leave if we haven't hovered over anything.
+			if HOVER_OBJECT ~= nil then
+				if HOVER_OBJECT:GetAttribute("ClickDetectable") and HOVER_OBJECT:FindFirstChild("OnHover") and HOVER_EVENT_STATE ~= 0 then
+					HOVER_OBJECT.OnHover:FireServer(false)
+					HOVER_EVENT_STATE = 0
+				end
+			end
+
 			HOVERING_OVER_CLICKER = false
 			HOVER_OBJECT = nil
 		end
 	else
 		-- Nothing to ray to.
+
+		if HOVER_OBJECT ~= nil then
+			if HOVER_OBJECT:GetAttribute("ClickDetectable") and HOVER_OBJECT:FindFirstChild("OnHover") and HOVER_EVENT_STATE ~= 0 then
+				HOVER_OBJECT.OnHover:FireServer(false)
+				HOVER_EVENT_STATE = 0
+			end
+		end
+
 		HOVERING_OVER_CLICKER = false
 		HOVER_OBJECT = nil
 	end

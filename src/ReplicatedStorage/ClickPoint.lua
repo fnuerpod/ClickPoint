@@ -14,6 +14,10 @@ export type ClickPoint = {
 	MouseButton2Up : any,
 	
 	ClickRemote : RemoteEvent,
+	HoverRemote : RemoteEvent,
+
+	MouseEnter : any,
+	MouseLeave : any,
 	
 	Settings : {[string] : any},
 	
@@ -91,6 +95,14 @@ local Signal = require(script.Parent.Packages.signal)
 --- @within ClickPoint
 --- This event is fired when a player releases Button 2 (right click) on their mouse.
 
+--- @prop MouseEnter Signal
+--- @within ClickPoint
+--- This event is fired when a player's mouse enters the raycast/maximum activation range of a ClickPoint.
+
+--- @prop MouseLeave Signal
+--- @within ClickPoint
+--- This event is fired when a player's mouse leaves the raycast/maximum activation range of a ClickPoint.
+
 local ClickPoint: ClickPoint = {}
 ClickPoint.__index = ClickPoint
 
@@ -129,14 +141,28 @@ function ClickPoint.new(instance: Instance, MaxActivation : number|nil, CursorIc
 	-- Setup hooks.
 	local OnClicked = Instance.new("RemoteEvent", instance)
 	OnClicked.Name = "OnClicked"
+
+	local OnHover = Instance.new("RemoteEvent", instance)
+	OnHover.Name = "OnHover"
 	
+	-- ClickDetector compatibility MouseClick event.
 	Clicker.MouseClick = Signal.new()
+
+	-- MouseButton1/2 pressed down events.
 	Clicker.MouseButton1Down = Signal.new()
 	Clicker.MouseButton2Down = Signal.new()
+
+	-- MouseButton1/2 released events.
 	Clicker.MouseButton1Up = Signal.new()
 	Clicker.MouseButton2Up = Signal.new()
 
+	-- Mouse enter/leave events.
+	Clicker.MouseEnter = Signal.new()
+	Clicker.MouseLeave = Signal.new()
+
+	-- RemoteEvents.
 	Clicker.ClickRemote = OnClicked
+	Clicker.HoverRemote = OnHover
 	
 	Clicker.Instance = instance
 	
@@ -147,6 +173,26 @@ function ClickPoint.new(instance: Instance, MaxActivation : number|nil, CursorIc
 	
 	Clicker.Settings["CursorIcon"] = CursorIcon
 	
+	Clicker.HoverRemote.OnServerEvent:Connect(function(player, state)
+		-- Perform checks.
+		local Check = math.ceil((Clicker.Instance.Position - player.Character.HumanoidRootPart.Position).Magnitude)
+		
+		-- TODO: look into adding additional security here.
+		if Check > Clicker.Settings["MaxActivationDistance"] then
+			Clicker.MouseLeave:Fire(player)
+			return
+		end
+
+		-- If we have entered hover, fire hover enter event.
+		-- If not, fire hover leave event.
+		if state then
+			Clicker.MouseEnter:Fire(player)
+		else
+			Clicker.MouseLeave:Fire(player)
+		end
+	end)
+
+	-- Event for click.
 	Clicker.ClickRemote.OnServerEvent:Connect(function(player, button, state)
 		-- Perform checks.
 		local Check = math.ceil((Clicker.Instance.Position - player.Character.HumanoidRootPart.Position).Magnitude)
