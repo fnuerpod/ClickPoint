@@ -6,7 +6,12 @@ export type ClickPoint = {
 	New : (Instance) -> ClickPoint,
 	
 	MouseClick : any,
-	
+
+	MouseButton1Down : any,
+	MouseButton2Down : any,
+
+	MouseButton1Up : any,
+	MouseButton2Up : any,
 	
 	ClickRemote : RemoteEvent,
 	
@@ -14,6 +19,12 @@ export type ClickPoint = {
 	
 	Instance : BasePart
 }
+
+-- Constant for ClickPoint tag.
+local CLICKPOINT_TAG: string = "ClickPoint"
+
+-- Initialise CollectionService.
+local CollectionService = game:GetService("CollectionService")
 
 --[=[
 	@class Settings
@@ -64,6 +75,22 @@ local Signal = require(script.Parent.Packages.signal)
 --- @within ClickPoint
 --- This event is fired when a ClickPoint is clicked and security checks have passed.
 
+--- @prop MouseButton1Down Signal
+--- @within ClickPoint
+--- This event is fired when a player presses down Button 1 (left click) on their mouse.
+
+--- @prop MouseButton1Up Signal
+--- @within ClickPoint
+--- This event is fired when a player releases Button 1 (left click) on their mouse.
+
+--- @prop MouseButton2Down Signal
+--- @within ClickPoint
+--- This event is fired when a player presses down Button 2 (right click) on their mouse.
+
+--- @prop MouseButton2Up Signal
+--- @within ClickPoint
+--- This event is fired when a player releases Button 2 (right click) on their mouse.
+
 local ClickPoint: ClickPoint = {}
 ClickPoint.__index = ClickPoint
 
@@ -95,13 +122,20 @@ function ClickPoint.new(instance: Instance, MaxActivation : number|nil, CursorIc
 	
 	-- Set attribute for click detectable.
 	instance:SetAttribute("ClickDetectable", true)
+
+	-- Add to constant tag.
+	CollectionService:AddTag(instance, CLICKPOINT_TAG)
 	
 	-- Setup hooks.
 	local OnClicked = Instance.new("RemoteEvent", instance)
 	OnClicked.Name = "OnClicked"
 	
 	Clicker.MouseClick = Signal.new()
-	
+	Clicker.MouseButton1Down = Signal.new()
+	Clicker.MouseButton2Down = Signal.new()
+	Clicker.MouseButton1Up = Signal.new()
+	Clicker.MouseButton2Up = Signal.new()
+
 	Clicker.ClickRemote = OnClicked
 	
 	Clicker.Instance = instance
@@ -113,7 +147,7 @@ function ClickPoint.new(instance: Instance, MaxActivation : number|nil, CursorIc
 	
 	Clicker.Settings["CursorIcon"] = CursorIcon
 	
-	Clicker.ClickRemote.OnServerEvent:Connect(function(player)
+	Clicker.ClickRemote.OnServerEvent:Connect(function(player, button, state)
 		-- Perform checks.
 		local Check = math.ceil((Clicker.Instance.Position - player.Character.HumanoidRootPart.Position).Magnitude)
 		
@@ -121,8 +155,28 @@ function ClickPoint.new(instance: Instance, MaxActivation : number|nil, CursorIc
 			return
 		end
 		
-		-- Allow.
-		Clicker.MouseClick:Fire(player)
+		-- Perform checks
+		if button == 1 then
+			-- Mouse1
+			if state then
+				-- Mouse down
+				Clicker.MouseButton1Down:Fire(player)
+			else
+				-- Mouse up
+				-- This should also fire MouseClick - for compatibility with ClickDetectors.
+				Clicker.MouseButton1Up:Fire(player)
+				Clicker.MouseClick:Fire(player)
+			end
+		elseif button == 2 then
+			-- Mouse2
+			if state then
+				-- Mouse down
+				Clicker.MouseButton2Down:Fire(player)
+			else
+				-- Mouse up
+				Clicker.MouseButton2Up:Fire(player)
+			end
+		end
 	end)
 	
 	return Clicker
