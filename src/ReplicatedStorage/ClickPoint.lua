@@ -115,7 +115,7 @@ ClickPoint.__index = ClickPoint
 
 	@return ClickPoint -- Returns an initialised ClickPoint class.
 ]=]
-function ClickPoint.new(instance: Instance, MaxActivation : number|nil, CursorIcon : string|nil) : ClickPoint
+function ClickPoint.new(instance: Instance, MaxActivation : number|nil, CursorIcon : string|nil, TooltipText : string|nil) : ClickPoint
 	assert(typeof(instance) == "Instance", "expected Instance, got " .. typeof(instance))
 	assert(instance:IsA("BasePart"), "expected BasePart, got " .. instance.ClassName)
 	
@@ -185,6 +185,11 @@ function ClickPoint.new(instance: Instance, MaxActivation : number|nil, CursorIc
 
 		-- Make detectable by client.
 		Clicker.Settings["ClickDetectable"] = true
+
+		-- If tooltip text exists in arguments, set it in settings.
+		if TooltipText ~= nil then
+			Clicker.Settings["TooltipText"] = TooltipText
+		end
 	end
 	
 	Clicker.HoverRemote.OnServerEvent:Connect(function(player, state)
