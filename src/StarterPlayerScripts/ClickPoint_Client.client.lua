@@ -49,6 +49,10 @@ local function _generateTooltip(instance: BasePart)
 	label.TextStrokeTransparency = 0
 	
 	label.Text = instance:GetAttribute("Tooltip")
+
+	local TiedTo = Instance.new("ObjectValue", ui)
+	TiedTo.Name = "TiedTo"
+	TiedTo.Value = instance
 	
 	local Connection
 	local temp_connection
@@ -95,45 +99,49 @@ game:GetService("RunService").RenderStepped:Connect(function()
 	local Raycast = workspace:Raycast(OriginPos, (Mouse.Hit.Position - OriginPos) * 1.1, RayParams)
 	
 	if Raycast then
-		if Raycast.Instance:GetAttribute("ClickDetectable") then
-			-- This is a ClickPoint. Perform max Distance checks.
-			
-			local Check = math.ceil((Raycast.Instance.Position - Player.Character.HumanoidRootPart.Position).Magnitude)
-
-			if Check > Raycast.Instance:GetAttribute("MaxActivationDistance") then
+		-- Check if we've already casted this before.
+		-- There is no point in additional processing if this is the case.
+		if Raycast.Instance ~= HOVER_OBJECT then
+			if Raycast.Instance:GetAttribute("ClickDetectable") then
+				-- This is a ClickPoint. Perform max Distance checks.
+				local Check = math.ceil((Raycast.Instance.Position - Player.Character.HumanoidRootPart.Position).Magnitude)
+	
+				if Check > Raycast.Instance:GetAttribute("MaxActivationDistance") then
+					if HOVER_OBJECT ~= nil then
+						if HOVER_OBJECT:GetAttribute("ClickDetectable") and HOVER_OBJECT:FindFirstChild("OnHover") and HOVER_EVENT_STATE ~= 0 then
+							HOVER_OBJECT.OnHover:FireServer(false)
+							HOVER_EVENT_STATE = 0
+						end
+					end
+	
+					HOVERING_OVER_CLICKER = false
+					HOVER_OBJECT = nil
+				else
+					HOVERING_OVER_CLICKER = true
+					HOVER_OBJECT = Raycast.Instance
+	
+					if HOVER_OBJECT:GetAttribute("ClickDetectable") and HOVER_OBJECT:FindFirstChild("OnHover") and HOVER_EVENT_STATE ~= 1 then
+						HOVER_OBJECT.OnHover:FireServer(true)
+						HOVER_EVENT_STATE = 1
+					end
+				end
+				
+			else
+				-- Not a clickpoint.
+				
+				-- Do not perform hover leave if we haven't hovered over anything.
 				if HOVER_OBJECT ~= nil then
 					if HOVER_OBJECT:GetAttribute("ClickDetectable") and HOVER_OBJECT:FindFirstChild("OnHover") and HOVER_EVENT_STATE ~= 0 then
 						HOVER_OBJECT.OnHover:FireServer(false)
 						HOVER_EVENT_STATE = 0
 					end
 				end
-
+	
 				HOVERING_OVER_CLICKER = false
 				HOVER_OBJECT = nil
-			else
-				HOVERING_OVER_CLICKER = true
-				HOVER_OBJECT = Raycast.Instance
-
-				if HOVER_OBJECT:GetAttribute("ClickDetectable") and HOVER_OBJECT:FindFirstChild("OnHover") and HOVER_EVENT_STATE ~= 1 then
-					HOVER_OBJECT.OnHover:FireServer(true)
-					HOVER_EVENT_STATE = 1
-				end
 			end
-			
-		else
-			-- Not a clickpoint.
-			
-			-- Do not perform hover leave if we haven't hovered over anything.
-			if HOVER_OBJECT ~= nil then
-				if HOVER_OBJECT:GetAttribute("ClickDetectable") and HOVER_OBJECT:FindFirstChild("OnHover") and HOVER_EVENT_STATE ~= 0 then
-					HOVER_OBJECT.OnHover:FireServer(false)
-					HOVER_EVENT_STATE = 0
-				end
-			end
-
-			HOVERING_OVER_CLICKER = false
-			HOVER_OBJECT = nil
 		end
+		
 	else
 		-- Nothing to ray to.
 
@@ -150,13 +158,20 @@ game:GetService("RunService").RenderStepped:Connect(function()
 	
 	-- Perform update
 	if HOVERING_OVER_CLICKER then
-		--print("Icon set.")
 		Player:GetMouse().Icon = Raycast.Instance:GetAttribute("CursorIcon")
 
+		if TOOLTIP_STORAGE ~= nil then
+			-- Check if tied to matches.
+			if TOOLTIP_STORAGE.TiedTo.Value ~= HOVER_OBJECT then
+				TOOLTIP_STORAGE:Destroy()
+				TOOLTIP_STORAGE = _generateTooltip(HOVER_OBJECT)
+			end
+		end
 		-- Check if instance has Tooltip text set.
 		-- If it does, we want to use it.
 		if HOVER_OBJECT:GetAttribute("Tooltip") and TOOLTIP_STORAGE == nil then
 			-- Display a tooltip.
+			-- CHECK IF TOOLTIP HAS CHANGED AT ALL.
 			TOOLTIP_STORAGE = _generateTooltip(HOVER_OBJECT)
 		end
 	else
