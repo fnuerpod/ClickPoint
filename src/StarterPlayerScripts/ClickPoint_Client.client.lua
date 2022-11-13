@@ -48,7 +48,7 @@ local function _generateTooltip(instance: BasePart)
 	label.TextColor3 = Color3.fromRGB(255,255,255)
 	label.TextStrokeTransparency = 0
 	
-	label.Text = instance:GetAttribute("Tooltip")
+	label.Text = instance:GetAttribute("Tooltip") or ""
 
 	local TiedTo = Instance.new("ObjectValue", ui)
 	TiedTo.Name = "TiedTo"
@@ -59,7 +59,7 @@ local function _generateTooltip(instance: BasePart)
 
 	temp_connection = instance:GetAttributeChangedSignal("Tooltip"):Connect(function()
 		-- Set label text.
-		label.Text = instance:GetAttribute("Tooltip")
+		label.Text = instance:GetAttribute("Tooltip") or ""
 	end)
 
 	Connection = game:GetService("RunService").RenderStepped:Connect(function()
